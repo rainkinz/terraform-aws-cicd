@@ -10,6 +10,12 @@
 # These parameters have reasonable defaults.
 # ---------------------------------------------------------------------------------------------------------------------
 
+variable "test_build_environment_vars" {
+//  type = list
+  type    = map
+  default = {}
+}
+
 variable "organization_name" {
   description = "The organization name provisioning the template (e.g. acme)"
   default     = "acme"

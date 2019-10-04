@@ -299,6 +299,12 @@ resource "aws_codebuild_project" "build_project" {
     type = "CODEPIPELINE"
   }
 
+
+  cache {
+    type  = "LOCAL"
+    modes = ["LOCAL_DOCKER_LAYER_CACHE", "LOCAL_SOURCE_CACHE"]
+  }
+
   environment {
     compute_type    = "${var.build_compute_type}"
     image           = "${var.build_image}"
@@ -324,11 +330,41 @@ resource "aws_codebuild_project" "test_project" {
     type = "CODEPIPELINE"
   }
 
+  cache {
+    type  = "LOCAL"
+    modes = ["LOCAL_DOCKER_LAYER_CACHE", "LOCAL_SOURCE_CACHE"]
+  }
+
   environment {
     compute_type    = "${var.build_compute_type}"
     image           = "${var.build_image}"
     type            = "LINUX_CONTAINER"
     privileged_mode = "${var.build_privileged}"
+
+    # environment_variable = "${var.test_build_environment_vars}"
+
+    dynamic "environment_variable" {
+      for_each = var.test_build_environment_vars
+
+      content {
+        name = environment_variable.key
+        value = environment_variable.value
+      }
+      # for_each = [ for env_var in var.test_build_environment_vars: {
+      #   name      = env_var.name
+      #   value     = env_var.value
+      # }]
+
+      # content {
+      #   name      = environment_variable.name
+      #   value     = environment_variable.value
+      # }
+    }
+
+    # environment_variable {
+    #   name  = "SOME_KEY1"
+    #   value = "SOME_VALUE1"
+    # }
   }
 
   source {
