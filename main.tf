@@ -101,6 +101,18 @@ resource "aws_iam_role_policy" "attach_codepipeline_policy" {
             "Effect": "Allow"
         },
         {
+          "Action": [
+            "ecr:BatchCheckLayerAvailability",
+            "ecr:CompleteLayerUpload",
+            "ecr:GetAuthorizationToken",
+            "ecr:InitiateLayerUpload",
+            "ecr:PutImage",
+            "ecr:UploadLayerPart"
+          ],
+          "Resource": "*",
+          "Effect": "Allow"
+        },
+        {
             "Action": [
                 "elasticbeanstalk:*",
                 "ec2:*",
@@ -257,6 +269,18 @@ resource "aws_iam_role_policy" "codebuild_policy" {
       ],
       "Resource": "${aws_kms_key.artifact_encryption_key.arn}",
       "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:CompleteLayerUpload",
+        "ecr:GetAuthorizationToken",
+        "ecr:InitiateLayerUpload",
+        "ecr:PutImage",
+        "ecr:UploadLayerPart"
+      ],
+      "Resource": "*",
+      "Effect": "Allow"
     }
   ]
 }
@@ -279,7 +303,7 @@ resource "aws_codebuild_project" "build_project" {
     compute_type    = "${var.build_compute_type}"
     image           = "${var.build_image}"
     type            = "LINUX_CONTAINER"
-    privileged_mode = "${var.build_privileged_override}"
+    privileged_mode = "${var.build_privileged}"
   }
 
   source {
@@ -304,7 +328,7 @@ resource "aws_codebuild_project" "test_project" {
     compute_type    = "${var.build_compute_type}"
     image           = "${var.build_image}"
     type            = "LINUX_CONTAINER"
-    privileged_mode = "${var.build_privileged_override}"
+    privileged_mode = "${var.build_privileged}"
   }
 
   source {

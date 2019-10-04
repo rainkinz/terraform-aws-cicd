@@ -4,8 +4,10 @@ Terraform module that stands up a new AWS CodeCommit repository integrated with
 AWS CodePipeline. The CodePipeline consists of three stages:
 
 1. A Source stage that is fed by the repository.
-2. A Test stage that uses the artifacts of the Source and executes commands in `buildspec_test.yml`.
-3. A Package stage that uses the artrifacts of the Test stage and excutes commands in `buildspec.yml`.
+2. A Test stage that uses the artifacts of the Source and executes commands in
+   `buildspec_test.yml`.
+3. A Package stage that uses the artrifacts of the Test stage and excutes
+   commands in `buildspec.yml`.
 
 ## Usage
 ```hcl

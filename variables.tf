@@ -59,7 +59,7 @@ variable "build_image" {
   default     = "aws/codebuild/standard:1.0"
 }
 
-variable "build_privileged_override" {
+variable "build_privileged" {
   description = "Set the build privileged override to 'true' if you are not using a CodeBuild supported Docker base image. This is only relevant to building Docker images"
   default     = "false"
 }
