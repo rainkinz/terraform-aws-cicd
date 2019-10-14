@@ -11,9 +11,10 @@
 # ---------------------------------------------------------------------------------------------------------------------
 
 variable "test_build_environment_vars" {
-//  type = list
-  type    = map
-  default = {}
+  type = list
+  default = []
+  # type    = map
+  # default = {}
 }
 
 variable "organization_name" {

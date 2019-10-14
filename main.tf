@@ -346,19 +346,19 @@ resource "aws_codebuild_project" "test_project" {
     dynamic "environment_variable" {
       for_each = var.test_build_environment_vars
 
-      content {
-        name = environment_variable.key
-        value = environment_variable.value
-      }
+      # content {
+      #   name = environment_variable.key
+      #   value = environment_variable.value
+      # }
       # for_each = [ for env_var in var.test_build_environment_vars: {
       #   name      = env_var.name
       #   value     = env_var.value
       # }]
 
-      # content {
-      #   name      = environment_variable.name
-      #   value     = environment_variable.value
-      # }
+      content {
+        name      = environment_variable.value.name
+        value     = environment_variable.value.value
+      }
     }
 
     # environment_variable {
